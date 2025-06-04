@@ -3,6 +3,7 @@ package com.tecdesoftware.market.persistance.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "compras")
@@ -22,6 +23,15 @@ public class Compra {
 
     private String comentario;
     private String estado;
+
+    // Insertable y updatable especifican que la tabla relacionada no busca ser modificada
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+    private Cliente cliente;
+
+    // Esto dice que productos se compraron
+    @OneToMany(mappedBy = "producto")
+    private List<CompraProducto> productos;
 
     public Integer getIdCompra() {
         return idCompra;
